@@ -6,7 +6,9 @@ name: triggered by other workflow 2
 on:
   workflow_run:
     workflows: ["CI"]
-    branches: [ft/*]
+    branches:
+      - develop
+      - ft/*
     types: 
       - completed
 
