@@ -3,4 +3,4 @@ kind: Kustomization
 
 images:
 - name: guestbook
-  newTag: bbb
+  newTag: sha-bb5b8ebd130e6e69ba10e580fbc5a704c73642e0
