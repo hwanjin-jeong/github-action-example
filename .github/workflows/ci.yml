@@ -33,7 +33,7 @@ jobs:
         run: echo Hello, world!
 
       - name: run on master
-        if: ${{ github.base_ref == 'master' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           echo "이곳은 마스터22"
         
