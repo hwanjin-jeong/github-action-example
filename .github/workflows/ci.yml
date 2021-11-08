@@ -33,12 +33,12 @@ jobs:
         run: echo Hello, world!
 
       - name: Run a one-line script
-        if: github.base_ref == 'master'
+        if: ${{ github.base_ref == 'master' }}
         run: |
           echo "이곳은 마스터22"
         
       - name: Run a one-line script
-        if: github.base_ref == 'develop'
+        if: ${{ github.base_ref == 'develop'}}
         run: |
           echo "이곳은 디벨롭"
         
