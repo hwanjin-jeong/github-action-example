@@ -35,7 +35,7 @@ jobs:
       - name: Run a one-line script
         if: github.base_ref == 'master'
         run: |
-          echo "이곳은 마스터"
+          echo "이곳은 마스터22"
         
       - name: Run a one-line script
         if: github.base_ref == 'develop'
