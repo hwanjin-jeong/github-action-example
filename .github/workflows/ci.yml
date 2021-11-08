@@ -36,9 +36,12 @@ jobs:
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
           echo "이곳은 마스터22"
+          export MOSHI_VAR = test
         
       - name: run on develop
         if: ${{ github.base_ref == 'develop'}}
         run: |
           echo "이곳은 디벨롭"
         
+      - name: variable test
+        run: echo $MOSHI_VAR
