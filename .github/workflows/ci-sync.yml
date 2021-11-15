@@ -20,7 +20,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          
       - name: actor
         run: |
           echo $GITHUB_ACTOR
@@ -35,5 +38,7 @@ jobs:
         uses: repo-sync/pull-request@v2
         if: ${{ failure() }}
         with:
-          destination_branch: "develop"
+          destination_branch: develop
+          pr_reviewer: "$GITHUB_ACTOR"
+          pr_assignee: "$GITHUB_ACTOR"
           github_token: ${{ secrets._GITHUB_TOKEN }}
