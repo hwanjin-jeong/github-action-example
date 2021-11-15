@@ -50,6 +50,7 @@ jobs:
 
       - name: Push changes to master
         uses: ad-m/github-push-action@master
+        continue-on-error: true
         with:
           branch: develop
           github_token: ${{ secrets._GITHUB_TOKEN }}
