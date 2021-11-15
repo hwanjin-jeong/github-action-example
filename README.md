@@ -5,10 +5,10 @@
 3
 hello
 
+auto auto
 
 5
 
-auto auto
 
 auto commit and pr test
 
