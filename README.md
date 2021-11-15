@@ -1,7 +1,5 @@
 # github-action-example
 
-11
-
 3
 hello
 
