@@ -39,3 +39,5 @@ jobs:
         with:
           destination_branch: "develop"
           github_token: ${{ secrets._GITHUB_TOKEN }}
+          pr_allow_empty: true
+          
