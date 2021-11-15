@@ -48,3 +48,8 @@ jobs:
         env:
           TAG_TEST: $(cat Dockerfile | grep APP_NAME= | head -n 1 | grep -o '".*"' | sed 's/"//g')
 
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "develop"
+          github_token: ${{ secrets._GITHUB_TOKEN }}
