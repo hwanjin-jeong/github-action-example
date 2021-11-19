@@ -28,15 +28,15 @@ jobs:
         run: |
           echo $GITHUB_ACTOR
 
-      - name: Push changes to master
-        uses: ad-m/github-push-action@master
-        with:
-          branch: develop
-          github_token: ${{ secrets._GITHUB_TOKEN }}
+      # - name: Push changes to master
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     branch: develop
+      #     github_token: ${{ secrets._GITHUB_TOKEN }}
           
       - name: pull-request
         uses: repo-sync/pull-request@v2
-        if: ${{ failure() }}
+        # if: ${{ failure() }}
         with:
           destination_branch: develop
           pr_reviewer: "$GITHUB_ACTOR"
