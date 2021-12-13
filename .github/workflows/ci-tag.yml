@@ -15,3 +15,7 @@ jobs:
       - name: 태그태그
         run: echo Hello, world!
 
+      - name: env
+        run : |
+          export
+          
