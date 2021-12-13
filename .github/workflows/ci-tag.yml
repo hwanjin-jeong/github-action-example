@@ -1,0 +1,17 @@
+name: CI with tags
+
+on:
+  push:
+    tags:        
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 태그태그
+        run: echo Hello, world!
+
