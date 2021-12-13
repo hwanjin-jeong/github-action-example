@@ -12,7 +12,8 @@ on:
       - develop
   pull_request:
     # branches: [ main ]
-
+  tags:
+    
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -35,7 +36,12 @@ jobs:
       - name: env
         run : |
           export        
-        
+
+      - name: run on tags
+        if: ${{ github.ref_type = 'tag'}}
+        run: |
+          echoㅇ "이곳은 태그"
+          
       - name: run on master
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
