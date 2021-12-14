@@ -10,9 +10,10 @@ on:
       - main
       - master
       - develop
+    tags:
+      - v*
   pull_request:
     # branches: [ main ]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -32,6 +33,15 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
+      - name: env
+        run : |
+          export        
+
+      - name: run on tags
+        if: ${{ github.ref_type	 == 'tag'}}
+        run: |
+          echo "이곳은 태그"
+          
       - name: run on master
         if: ${{ github.ref == 'refs/heads/master' }}
         run: |
