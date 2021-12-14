@@ -3,9 +3,9 @@ name: CI-sync
 on:
   schedule:
     - cron: '* * * * *'
-      
+
 jobs:
-  sync:
+  auto-merge:
     runs-on: ubuntu-latest
 
     steps:
