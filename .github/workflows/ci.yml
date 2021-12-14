@@ -38,7 +38,7 @@ jobs:
           export        
 
       - name: run on tags
-        if: ${{ GITHUB_REF_TYPE == 'tag'}}
+        if: ${{ $GITHUB_REF_TYPE == 'tag'}}
         run: |
           echoㅇ "이곳은 태그"
           
