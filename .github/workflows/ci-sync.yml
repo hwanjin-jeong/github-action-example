@@ -1,33 +1,25 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI-sync
 
 on:
   schedule:
-    - cron:  '21 * * * *'
-      
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+    - cron: '* * * * *'
+  workflow_dispatch:
+    
 jobs:
-  # This workflow contains a single job called "build"
-  sync:
-    # The type of runner that the job will run on
+  cron:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
-          ref: 'develop'
-          persist-credentials: false
-          fetch-depth: 0
+          ref: develop
 
-     - name: Push changes master to develop
-       uses: ad-m/github-push-action@master
-       with:
-         branch: main
-         github_token: ${{ secrets.GIT_TOKEN }}
-          
+      - name: Push changes master to develop
+        uses: ad-m/github-push-action@master
+        with:
+          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: pull-request
         uses: repo-sync/pull-request@v2
         if: ${{ failure() }}        
@@ -35,4 +27,4 @@ jobs:
           destination_branch: main
           pr_reviewer: "$GITHUB_ACTOR"
           pr_assignee: "$GITHUB_ACTOR"
-          github_token: ${{ secrets._GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
