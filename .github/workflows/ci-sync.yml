@@ -2,13 +2,10 @@
 
 name: CI-sync
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches:
-      - main
-
+  schedule:
+    - cron:  '5 * * * *'
+      
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -21,24 +18,21 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
+          ref: 'develop'
           persist-credentials: false
           fetch-depth: 0
-          
-      - name: actor
-        run: |
-          echo $GITHUB_ACTOR
 
-      # - name: Push changes to master
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     branch: develop
-      #     github_token: ${{ secrets._GITHUB_TOKEN }}
+     - name: Push changes master to develop
+       uses: ad-m/github-push-action@master
+       with:
+         branch: main
+         github_token: ${{ secrets.GIT_TOKEN }}
           
       - name: pull-request
         uses: repo-sync/pull-request@v2
-        # if: ${{ failure() }}
+        if: ${{ failure() }}        
         with:
-          destination_branch: develop
+          destination_branch: main
           pr_reviewer: "$GITHUB_ACTOR"
           pr_assignee: "$GITHUB_ACTOR"
           github_token: ${{ secrets._GITHUB_TOKEN }}
