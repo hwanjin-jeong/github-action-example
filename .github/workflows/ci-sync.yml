@@ -13,12 +13,12 @@ jobs:
         with:
           ref: develop
 
-     - name: Push changes master to develop
-       uses: ad-m/github-push-action@master
-       with:
-         branch: main
-         github_token: ${{ secrets.GITHUB_TOKEN }}
-          
+      - name: Push changes master to develop
+        uses: ad-m/github-push-action@master
+        with:
+          branch: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: pull-request
         uses: repo-sync/pull-request@v2
         if: ${{ failure() }}        
