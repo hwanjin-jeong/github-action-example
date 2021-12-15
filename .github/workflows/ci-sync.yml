@@ -44,6 +44,8 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           branch: main
+          title: 'Develop to Master'
+          commit-message: 'Develop to Master'
           labels: |
             automated pr
 
