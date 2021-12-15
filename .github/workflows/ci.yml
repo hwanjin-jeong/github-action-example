@@ -37,9 +37,6 @@ jobs:
           echo "이곳은 마스터22"
           export MOSHI_VAR=test
 
-
-
-
       - name: Define variables
         run: echo "${TAG_TEST}"
         env:
