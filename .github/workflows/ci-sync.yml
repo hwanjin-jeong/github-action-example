@@ -50,16 +50,6 @@ jobs:
           pr_label: "auto-pr"
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-#      - name: Create pr develop to master
-#        id: cpr
-#        uses: peter-evans/create-pull-request@v3
-#        with:
-#          branch: main
-#          title: 'Develop to Master'
-#          commit-message: 'Develop to Master'
-#          labels: |
-#            automated pr
-
       - name: output-number
         run: echo ${{steps.cpr.outputs.pr_number}}
 
