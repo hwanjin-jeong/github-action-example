@@ -40,7 +40,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           base: develop
-          branch: main
+          branch: origin/main
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
