@@ -23,7 +23,8 @@ jobs:
 
       - name: env
         run : |
-          export        
+          export
+          sleep 100
 
       - name: run on tags
         if: ${{ github.ref_type	 == 'tag'}}
@@ -36,11 +37,8 @@ jobs:
           echo "이곳은 마스터22"
           export MOSHI_VAR=test
 
-      - name: run on develop
-        if: ${{ github.base_ref == 'develop'}}
-        run: |
-          echo "이곳은 디벨롭"
-          sleep 100
+
+
 
       - name: Define variables
         run: echo "${TAG_TEST}"
