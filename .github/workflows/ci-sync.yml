@@ -35,17 +35,17 @@ jobs:
         with:
           ref: develop
 
-      - name: Push changes master to develop
-        uses: ad-m/github-push-action@master
+      - name: Create pr develop to master
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
         with:
-          branch: main
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          base: develop
+          branch: master
 
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
-        if: ${{ failure() }}        
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v1
         with:
-          destination_branch: main
-          pr_reviewer: "$GITHUB_ACTOR"
-          pr_assignee: "$GITHUB_ACTOR"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: merge
+          token: ${{ secrets.GITHUB_TOKEN }}
