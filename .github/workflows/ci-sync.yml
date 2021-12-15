@@ -60,6 +60,13 @@ jobs:
 #          labels: |
 #            automated pr
 
+      - name: output-url
+        run: echo ${{steps.cpr.outputs.pr_url}}
+      - name: output-number
+        run: echo ${{steps.cpr.outputs.pr_number}}
+      - name: output-has-changed-files
+        run: echo ${{steps.cpr.outputs.has_changed_files}}
+
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pr_number != 0
         uses: peter-evans/enable-pull-request-automerge@v1
