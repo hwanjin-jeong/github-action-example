@@ -10,6 +10,10 @@ jobs:
   tagging:
     runs-on: ubuntu-latest
     steps:
+      - name: env
+        run: |
+          export
+
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
