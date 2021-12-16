@@ -10,8 +10,8 @@ jobs:
 
     steps:
       - name: env
-          run: |
-            export
+        run: |
+          export
 
       - uses: TimonVS/pr-labeler-action@v3
         with:
