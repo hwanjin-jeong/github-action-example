@@ -7,7 +7,12 @@ on:
 jobs:
   pr-labeler:
     runs-on: ubuntu-latest
+
     steps:
+      - name: env
+          run: |
+            export
+
       - uses: TimonVS/pr-labeler-action@v3
         with:
           configuration-path: .github/pr-labeler.yml # optional, .github/pr-labeler.yml is the default value
