@@ -21,12 +21,18 @@ jobs:
           release_branches: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          name: Release ${{ steps.tag_version.outputs.new_tag }}
-          body: ${{ steps.tag_version.outputs.changelog }}
+      # - name: Create a new tag
+      #   uses: actions-ecosystem/action-push-tag@v1
+      #   with:
+      #     tag: ${{ steps.tag_version.outputs.new_tag }}
+      #     message: Release ${{ steps.tag_version.outputs.new_tag }}
+          
+      # - name: Create a GitHub release
+      #   uses: ncipollo/release-action@v1
+      #   with:
+      #     tag: ${{ steps.tag_version.outputs.new_tag }}
+      #     name: Release ${{ steps.tag_version.outputs.new_tag }} 
+      #     body: ${{ steps.tag_version.outputs.changelog }}
 
   cron:
     needs: [ tagging ]
