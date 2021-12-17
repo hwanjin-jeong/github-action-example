@@ -50,35 +50,35 @@ jobs:
       #     name: Release ${{ steps.tag_version.outputs.new_tag }} 
       #     body: ${{ steps.tag_version.outputs.changelog }}
 
-#  cron:
-#    needs: [ tagging ]
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#        with:
-#          persist-credentials: false
-#          fetch-depth: 0
-#          ref: develop
-#
-#      - name: Generate PR master to develop
-#        id: cpr
-#        uses: repo-sync/pull-request@v2
-#        with:
-#          destination_branch: main
-#          pr_reviewer: "$GITHUB_ACTOR"
-#          pr_assignee: "$GITHUB_ACTOR"
-#          pr_title: "Develop to Master"
-#          pr_label: "auto-pr"
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: output-number
-#        run: echo ${{steps.cpr.outputs.pr_number}}
-#
-#      - name: Enable Pull Request Automerge
-#        if: steps.cpr.outputs.pr_number != 0
-#        uses: peter-evans/enable-pull-request-automerge@v1
-#        with:
-#          pull-request-number: ${{ steps.cpr.outputs.pr_number }}
-#          merge-method: merge
-#          token: ${{ secrets.GITHUB_TOKEN }}
+  cron:
+    needs: [ tagging ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: develop
+
+      - name: Generate PR master to develop
+        id: cpr
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: main
+          pr_reviewer: "$GITHUB_ACTOR"
+          pr_assignee: "$GITHUB_ACTOR"
+          pr_title: "Develop to Master"
+          pr_label: "auto-pr"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: output-number
+        run: echo ${{steps.cpr.outputs.pr_number}}
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pr_number != 0
+        uses: peter-evans/enable-pull-request-automerge@v1
+        with:
+          pull-request-number: ${{ steps.cpr.outputs.pr_number }}
+          merge-method: merge
+          token: ${{ secrets.GITHUB_TOKEN }}
