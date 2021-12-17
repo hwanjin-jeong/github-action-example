@@ -25,11 +25,17 @@ jobs:
           export
 
       - name: Bump version and push tag
-        id: tag_version
-        uses: mathieudutour/github-tag-action@v6.0
-        with:
-          release_branches: main,develop
-          github_token: ${{ secrets._GITHUB_TOKEN }}
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
+          WITH_V: true
+
+#      - name: Bump version and push tag
+#        id: tag_version
+#        uses: mathieudutour/github-tag-action@v6.0
+#        with:
+#          release_branches: main,develop
+#          github_token: ${{ secrets._GITHUB_TOKEN }}
 
       # - name: Create a new tag
       #   uses: actions-ecosystem/action-push-tag@v1
