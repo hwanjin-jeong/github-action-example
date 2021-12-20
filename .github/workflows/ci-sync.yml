@@ -9,19 +9,11 @@ jobs:
   tagging:
     runs-on: ubuntu-latest
     steps:
-      - name: env
-        run: |
-          export
-
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
           fetch-depth: 0
           ref: main
-
-      - name: env
-        run: |
-          export
 
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.36.0
