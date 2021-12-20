@@ -18,6 +18,9 @@ jobs:
       - name: env
         run: env
 
+      - name: Set env
+        run: echo "TAG_SHA=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+
 #      mathieudutour/github-tag-action@v6.0 action은 default branch로만 동작하는 문제가 있음.
       - name: Bump version and push tag
         id: tag_version
@@ -25,8 +28,7 @@ jobs:
         with:
           release_branches: main,develop
           github_token: ${{ secrets._GITHUB_TOKEN }}
-          commit_sha: ${{ github.sha }}
-
+          commit_sha: ${{ env.TAG_SHA }}
 
 #      왜 schedule 에서는 에러가 발생하지...? // Tag was not created properly
 #      - name: Bump version and push tag
