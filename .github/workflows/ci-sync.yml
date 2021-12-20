@@ -2,7 +2,7 @@ name: CI-sync
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '* * * * *'
   workflow_dispatch:
     
 jobs:
@@ -76,13 +76,17 @@ jobs:
       - name: output-number
         run: echo ${{steps.cpr.outputs.pr_number}}
 
-  merge:
-    needs: [ create-pr ]
-    runs-on: ubuntu-18.04
-
-    steps:
       - name: wait
         run: sleep 10
+
+      - uses: docker://chinthakagodawita/autoupdate-action:v1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          DRY_RUN: "false"
+          PR_FILTER: "protected"
+          RETRY_COUNT: "5"
+          RETRY_SLEEP: "300"
+          MERGE_CONFLICT_ACTION: "fail"
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pr_number != 0
