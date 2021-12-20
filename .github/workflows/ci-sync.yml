@@ -15,13 +15,10 @@ jobs:
           fetch-depth: 0
           ref: main
 
-      - name: env
-        run: env
-
       - name: Set env
         run: echo "TAG_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
-#      mathieudutour/github-tag-action@v6.0 action은 default branch로만 동작하는 문제가 있음.
+#      mathieudutour/github-tag-action@v6.0 action은 default branch로만 동작하는 문제가 있음...
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
@@ -30,78 +27,44 @@ jobs:
           github_token: ${{ secrets._GITHUB_TOKEN }}
           commit_sha: ${{ env.TAG_SHA }}
 
-#      왜 schedule 에서는 에러가 발생하지...? // Tag was not created properly
-#      - name: Bump version and push tag
-#        uses: anothrNick/github-tag-action@1.36.0
-#        continue-on-error: true
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          WITH_V: true
-#          DEFAULT_BUMP: patch
+  create-pr:
+    needs: [ tagging ]
+    runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: develop
 
-#      semantic version
-#      - name: Create a new tag version
-#        id: tag_version
-#        uses: paulhatch/semantic-version@v4.0.2
-#        with:
-#          tag_prefix: "v"
-#          major_pattern: "[MAJOR]"
-#          minor_pattern: "[MINOR]"
-#          format: "${major}.${minor}.${patch}"
-#          short_tags: true
-#
-#      - name: output-version
-#        run: echo ${{steps.tag_version.outputs.version }}
-#
-#      - name: output-version_tag
-#        run: echo ${{steps.tag_version.outputs.version_tag }}
-#
-#      - name: output-changed
-#        run: echo ${{steps.tag_version.outputs.changed }}
+      - name: Generate PR master to develop
+        id: cpr
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: main
+          pr_reviewer: "$GITHUB_ACTOR"
+          pr_assignee: "$GITHUB_ACTOR"
+          pr_title: "Develop to Master"
+          pr_label: "auto-pr"
+          github_token: ${{ secrets._GITHUB_TOKEN }}
 
+      - run: sleep 20
 
-#  create-pr:
-#    needs: [ tagging ]
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#        with:
-#          persist-credentials: false
-#          fetch-depth: 0
-#          ref: develop
-#
-#      - name: Generate PR master to develop
-#        id: cpr
-#        uses: repo-sync/pull-request@v2
-#        with:
-#          destination_branch: main
-#          pr_reviewer: "$GITHUB_ACTOR"
-#          pr_assignee: "$GITHUB_ACTOR"
-#          pr_title: "Develop to Master"
-#          pr_label: "auto-pr"
-#          github_token: ${{ secrets._GITHUB_TOKEN }}
-#
-#      - name: output-number
-#        run: echo ${{steps.cpr.outputs.pr_number}}
-#
-#      - name: wait
-#        run: sleep 10
-#
-#      - uses: docker://chinthakagodawita/autoupdate-action:v1
-#        env:
-#          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-#          DRY_RUN: "false"
-#          PR_FILTER: "protected"
-#          RETRY_COUNT: "5"
-#          RETRY_SLEEP: "300"
-#          MERGE_CONFLICT_ACTION: "fail"
-#
-#      - name: Enable Pull Request Automerge
-#        if: steps.cpr.outputs.pr_number != 0
-#        uses: peter-evans/enable-pull-request-automerge@v1
-#        with:
-#          pull-request-number: ${{ steps.cpr.outputs.pr_number }}
-#          merge-method: merge
-#          token: ${{ secrets._GITHUB_TOKEN }}
+      - uses: docker://chinthakagodawita/autoupdate-action:v1
+        if: steps.cpr.outputs.pr_number != 0
+        env:
+          GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
+          DRY_RUN: false
+          PR_FILTER: protected
+          RETRY_COUNT: 5
+          RETRY_SLEEP: 300
+          MERGE_CONFLICT_ACTION: fail
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pr_number != 0
+        uses: peter-evans/enable-pull-request-automerge@v1
+        with:
+          pull-request-number: ${{ steps.cpr.outputs.pr_number }}
+          merge-method: merge
+          token: ${{ secrets._GITHUB_TOKEN }}
