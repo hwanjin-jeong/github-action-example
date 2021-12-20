@@ -20,6 +20,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   auto-udpate:
+    runs-on: ubuntu-latest
+
     steps:
       - uses: docker://chinthakagodawita/autoupdate-action:v1
         env:
