@@ -42,6 +42,16 @@ jobs:
           format: "${major}.${minor}.${patch}"
           short_tags: true
 
+      - name: output-version
+        run: echo ${{steps.tag_version.outputs.version }}
+
+      - name: output-number
+        run: echo ${{steps.tag_version.outputs.version_tag }}
+
+      - name: output-number
+        run: echo ${{steps.tag_version.outputs.changed }}
+
+
       - name: Create a new tag
         uses: actions-ecosystem/action-push-tag@v1
         with:
