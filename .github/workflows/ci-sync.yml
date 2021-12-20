@@ -32,13 +32,14 @@ jobs:
 #          release_branches: main,develop
 #          github_token: ${{ secrets._GITHUB_TOKEN }}
 
-      - uses: paulhatch/semantic-version@v4.0.2
-        with:
-          tag_prefix: "v"
-          major_pattern: "[MAJOR]"
-          minor_pattern: "[MINOR]"
-          format: "${major}.${minor}.${patch}"
-          short_tags: true
+       - name: Create a new tag version
+         uses: paulhatch/semantic-version@v4.0.2
+         with:
+           tag_prefix: "v"
+           major_pattern: "[MAJOR]"
+           minor_pattern: "[MINOR]"
+           format: "${major}.${minor}.${patch}"
+           short_tags: true
 
        - name: Create a new tag
          uses: actions-ecosystem/action-push-tag@v1
