@@ -24,8 +24,6 @@ jobs:
       - name: env
         run : |
           export
-          echo ${github.ref}
-          echo ${github.sha}
           echo $GITHUB_SHA
 
       - name: run on tags
