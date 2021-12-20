@@ -19,7 +19,7 @@ jobs:
         run: env
 
       - name: Set env
-        run: echo "TAG_SHA=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+        run: echo "TAG_SHA=$GITHUB_SHA" >> $GITHUB_ENV
 
 #      mathieudutour/github-tag-action@v6.0 action은 default branch로만 동작하는 문제가 있음.
       - name: Bump version and push tag
