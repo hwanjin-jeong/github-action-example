@@ -24,6 +24,7 @@ jobs:
       - name: env
         run : |
           export
+          echo $GITHUB_SHA
           sleep 100
 
       - name: run on tags
