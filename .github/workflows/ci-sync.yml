@@ -18,6 +18,12 @@ jobs:
       - name: env
         run: env
 
+      - name: github
+        run: |
+          echo $github.ref
+          echo $github.sha
+          echo $GITHUB_SHA
+
 #      왜 schedule 에서는 에러가 발생하지...? // Tag was not created properly
 #      - name: Bump version and push tag
 #        uses: anothrNick/github-tag-action@1.36.0
@@ -34,6 +40,7 @@ jobs:
 #        with:
 #          release_branches: main,develop
 #          github_token: ${{ secrets._GITHUB_TOKEN }}
+#          commit_sha: ${}
 
 
 #      semantic version
