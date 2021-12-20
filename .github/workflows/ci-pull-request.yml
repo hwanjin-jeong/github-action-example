@@ -30,10 +30,7 @@ jobs:
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           DRY_RUN: "false"
-          PR_FILTER: "labelled"
-          PR_LABELS: "auto-pr"
-          EXCLUDED_LABELS: "dependencies,wontfix"
-          MERGE_MSG: "Branch was auto-updated."
+          PR_FILTER: "protected"
           RETRY_COUNT: "5"
           RETRY_SLEEP: "300"
           MERGE_CONFLICT_ACTION: "fail"
