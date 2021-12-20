@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
     
 jobs:
-
   tagging:
     runs-on: ubuntu-latest
     steps:
@@ -26,6 +25,7 @@ jobs:
 
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.36.0
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
           WITH_V: true
