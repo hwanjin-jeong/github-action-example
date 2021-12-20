@@ -19,6 +19,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  auto-udpate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: wait
+        run: sleep 10
+
+      - uses: docker://chinthakagodawita/autoupdate-action:v1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          DRY_RUN: "false"
+          PR_FILTER: "protected"
+          RETRY_COUNT: "5"
+          RETRY_SLEEP: "300"
+          MERGE_CONFLICT_ACTION: "fail"
+
 #  labeler:
 #    runs-on: ubuntu-latest
 #    steps:
