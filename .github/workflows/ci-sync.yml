@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          persist-credentials: false
+          persist-credentials: falseㅔㅔ
           fetch-depth: 0
           ref: main
 
@@ -32,20 +32,20 @@ jobs:
 #          release_branches: main,develop
 #          github_token: ${{ secrets._GITHUB_TOKEN }}
 
-       - name: Create a new tag version
-         uses: paulhatch/semantic-version@v4.0.2
-         with:
-           tag_prefix: "v"
-           major_pattern: "[MAJOR]"
-           minor_pattern: "[MINOR]"
-           format: "${major}.${minor}.${patch}"
-           short_tags: true
+      - name: Create a new tag version
+        uses: paulhatch/semantic-version@v4.0.2
+        with:
+          tag_prefix: "v"
+          major_pattern: "[MAJOR]"
+          minor_pattern: "[MINOR]"
+          format: "${major}.${minor}.${patch}"
+          short_tags: true
 
-       - name: Create a new tag
-         uses: actions-ecosystem/action-push-tag@v1
-         with:
-           tag: ${{ steps.tag_version.outputs.new_tag }}
-           message: Release ${{ steps.tag_version.outputs.new_tag }}
+      - name: Create a new tag
+        uses: actions-ecosystem/action-push-tag@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          message: Release ${{ steps.tag_version.outputs.new_tag }}
 
       # - name: Create a GitHub release
       #   uses: ncipollo/release-action@v1
