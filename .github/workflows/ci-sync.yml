@@ -33,6 +33,7 @@ jobs:
 #          github_token: ${{ secrets._GITHUB_TOKEN }}
 
       - name: Create a new tag version
+        id: tag_version
         uses: paulhatch/semantic-version@v4.0.2
         with:
           tag_prefix: "v"
@@ -44,8 +45,8 @@ jobs:
       - name: Create a new tag
         uses: actions-ecosystem/action-push-tag@v1
         with:
-          tag: ${{ steps.tag_version.outputs.new_tag }}
-          message: Release ${{ steps.tag_version.outputs.new_tag }}
+          tag: ${{ steps.tag_version.outputs.version_tag }}
+          message: Release ${{ steps.tag_version.outputs.version_tag }}
 
       # - name: Create a GitHub release
       #   uses: ncipollo/release-action@v1
