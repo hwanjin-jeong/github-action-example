@@ -43,8 +43,6 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: main
-          pr_reviewer: "$GITHUB_ACTOR"
-          pr_assignee: "$GITHUB_ACTOR"
           pr_title: "Develop to Master"
           pr_label: "auto-pr"
           github_token: ${{ secrets._GITHUB_TOKEN }}
