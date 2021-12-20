@@ -25,7 +25,7 @@ jobs:
         with:
           release_branches: main,develop
           github_token: ${{ secrets._GITHUB_TOKEN }}
-          commit_sha: ${{ GITHUB_SHA }}
+          commit_sha: ${{ github.sha }}
 
 
 #      왜 schedule 에서는 에러가 발생하지...? // Tag was not created properly
