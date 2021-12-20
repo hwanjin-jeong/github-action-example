@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
-    
+
 jobs:
   tagging:
     runs-on: ubuntu-latest
@@ -18,7 +18,7 @@ jobs:
       - name: Set env
         run: echo "TAG_SHA=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
-#      mathieudutour/github-tag-action@v6.0 action은 default branch로만 동작하는 문제가 있음...
+      #      mathieudutour/github-tag-action@v6.0 action은 default branch로만 동작하는 문제가 있음...
       - name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
@@ -48,6 +48,9 @@ jobs:
           pr_title: "Develop to Master"
           pr_label: "auto-pr"
           github_token: ${{ secrets._GITHUB_TOKEN }}
+
+      - name: output-number
+        run: echo ${{ steps.cpr.outputs.pr_number }}
 
       - run: sleep 20
 
