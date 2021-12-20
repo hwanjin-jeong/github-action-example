@@ -76,27 +76,14 @@ jobs:
       - name: output-number
         run: echo ${{steps.cpr.outputs.pr_number}}
 
-      - name: wait
-        run: sleep 10
-
-
   merge:
     needs: [ create-pr ]
     runs-on: ubuntu-18.04
-    
+
     steps:
-      - uses: docker://chinthakagodawita/autoupdate-action:v1
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          DRY_RUN: "false"
-          PR_FILTER: "update"
-          PR_LABELS: "auto-pr"
-          EXCLUDED_LABELS: "dependencies,wontfix"
-          MERGE_MSG: "Branch was auto-updated."
-          RETRY_COUNT: "5"
-          RETRY_SLEEP: "300"
-          MERGE_CONFLICT_ACTION: "fail"
-      
+      - name: wait
+        run: sleep 10
+
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pr_number != 0
         uses: peter-evans/enable-pull-request-automerge@v1
