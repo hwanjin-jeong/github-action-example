@@ -34,7 +34,7 @@ jobs:
           images: /drpalette-server-v2-dev
           tags: |
             type=sha,format=long
-            type=semver,pattern={{version}}
+            type=semver,pattern={{raw}}
 
       - name: run on tags
         if: ${{ github.ref_type	 == 'tag'}}
