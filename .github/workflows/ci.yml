@@ -27,6 +27,15 @@ jobs:
           echo $GITHUB_SHA
           sleep 100
 
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: /drpalette-server-v2-dev
+          tags: |
+            type=sha,format=long
+            type=semver,pattern={{version}}
+
       - name: run on tags
         if: ${{ github.ref_type	 == 'tag'}}
         run: |
