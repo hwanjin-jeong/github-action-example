@@ -70,7 +70,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets._GITHUB_TOKEN }}
           DRY_RUN: false
-          PR_FILTER: protected
+          PR_FILTER: labelled
+          PR_LABELS: "auto-pr"
           RETRY_COUNT: 5
           RETRY_SLEEP: 300
           MERGE_CONFLICT_ACTION: fail
