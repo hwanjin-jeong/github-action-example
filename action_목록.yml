@@ -1,4 +1,4 @@
-name: CI-sync
+name: 
 
 on:
   schedule:
