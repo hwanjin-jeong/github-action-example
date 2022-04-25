@@ -24,17 +24,7 @@ jobs:
       - name: env
         run : |
           export
-          echo $GITHUB_SHA
           sleep 100
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: /drpalette-server-v2-dev
-          tags: |
-            type=sha,format=long
-            type=semver,pattern={{raw}}
 
       - name: run on tags
         if: ${{ github.ref_type	 == 'tag'}}
@@ -51,3 +41,45 @@ jobs:
         run: echo "${TAG_TEST}"
         env:
           TAG_TEST: $(cat Dockerfile | grep APP_NAME= | head -n 1 | grep -o '".*"' | sed 's/"//g')
+
+
+  publish:
+    runs-on: ubuntu-latest
+    outputs:
+      server-gitlog: ${{ steps.commit-msg.outputs.GITLOG }}
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set env
+        id: commit-msg
+        run: |
+          echo "::set-output name=GITLOG::$(git log -1 --no-merges --pretty=format:"%s | %h")"
+
+
+  modify_manifest:
+    needs: [ publish ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+          token: ${{ secrets._GITHUB_TOKEN }}
+
+      - name: Set develop environment tag
+        run: |
+          echo $GITHUB_SHA > $GITHUB_SHA
+          
+      - name: Commit kustomization
+        run: |
+          git config --local user.email "drpalette-bot@medibloc.org"
+          git config --local user.name "drpalette-bot"
+          git commit -a -m "SVR-MSG::${{needs.publish.outputs.server-gitlog}}"
+
+      - name: Push changes to master
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GIT_TOKEN }}
+          repository: medibloc/drpalette-infra
+          branch: master
+          force: true
