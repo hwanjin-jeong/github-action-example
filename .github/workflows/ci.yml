@@ -75,7 +75,7 @@ jobs:
         run: |
           git config --local user.email "drpalette-bot@medibloc.org"
           git config --local user.name "drpalette-bot"
-          git commit -a -m "SVR-MSG::${{needs.publish.outputs.server-gitlog}}"
+          git commit -a -m '"SVR-MSG::${{needs.publish.outputs.server-gitlog}}"'
 
       - name: Push changes to master
         uses: ad-m/github-push-action@master
