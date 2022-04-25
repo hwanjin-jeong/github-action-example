@@ -65,6 +65,7 @@ jobs:
       - name: Set develop environment tag
         run: |
           echo $GITHUB_SHA > $GITHUB_SHA
+          git add $GITHUB_SHA
           
       - name: Commit kustomization
         run: |
