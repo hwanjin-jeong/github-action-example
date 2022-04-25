@@ -12,37 +12,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  # build:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Run a one-line script
-        run: echo Hello, world!
+  #     - name: Run a one-line script
+  #       run: echo Hello, world!
 
-      - name: env
-        run : |
-          export
-          sleep 100
+  #     - name: env
+  #       run : |
+  #         export
+  #         sleep 100
 
-      - name: run on tags
-        if: ${{ github.ref_type	 == 'tag'}}
-        run: |
-          echo "이곳은 태그"
+  #     - name: run on tags
+  #       if: ${{ github.ref_type	 == 'tag'}}
+  #       run: |
+  #         echo "이곳은 태그"
           
-      - name: run on master
-        if: ${{ github.ref == 'refs/heads/master' }}
-        run: |
-          echo "이곳은 마스터22"
-          export MOSHI_VAR=test
+  #     - name: run on master
+  #       if: ${{ github.ref == 'refs/heads/master' }}
+  #       run: |
+  #         echo "이곳은 마스터22"
+  #         export MOSHI_VAR=test
 
-      - name: Define variables
-        run: echo "${TAG_TEST}"
-        env:
-          TAG_TEST: $(cat Dockerfile | grep APP_NAME= | head -n 1 | grep -o '".*"' | sed 's/"//g')
-
-
+  #     - name: Define variables
+  #       run: echo "${TAG_TEST}"
+  #       env:
+  #         TAG_TEST: $(cat Dockerfile | grep APP_NAME= | head -n 1 | grep -o '".*"' | sed 's/"//g')
   publish:
     runs-on: ubuntu-latest
     outputs:
@@ -50,12 +48,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set env
         id: commit-msg
         run: |
-          echo "::set-output name=GITLOG::$(git log -1 --no-merges --pretty=format:"%s | %h")"
-
+          echo "::set-output name=GITLOG::$(git log -1 --no-merges --pretty=format:"%s | %h")"          
 
   modify_manifest:
     needs: [ publish ]
