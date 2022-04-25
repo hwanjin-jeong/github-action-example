@@ -61,6 +61,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          token: ${{ secrets._GITHUB_TOKEN }}
 
       - name: Set develop environment tag
         run: |
